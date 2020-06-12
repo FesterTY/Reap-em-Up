@@ -1,10 +1,30 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Assets/crosshair.png" type="Texture" id=1]
+[ext_resource path="res://Assets/fist.png" type="Texture" id=2]
+[ext_resource path="res://PlayerController.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
+
+[sub_resource type="Animation" id=2]
+resource_name = "Punch"
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Control/Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.11 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 1, 2 ]
+}
 
 [node name="Spatial" type="Spatial"]
 
 [node name="Player" type="KinematicBody" parent="."]
+script = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Player"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
@@ -15,6 +35,7 @@ enabled = true
 cast_to = Vector3( 0, -1, -2000 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+anims/Punch = SubResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Player"]
 
@@ -28,12 +49,19 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="Player/CanvasLayer/Control"]
+position = Vector2( 100, -224 )
+scale = Vector2( 7, 7 )
+texture = ExtResource( 2 )
+vframes = 3
 
 [node name="TextureRect" type="TextureRect" parent="Player/CanvasLayer"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+margin_left = -8.0
+margin_top = -8.0
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
